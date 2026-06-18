@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Product from './components/Product';
 import { useProducts } from './hooks/products';
 import Loader from './components/Loader';
@@ -9,6 +9,8 @@ import CreateProduct from './components/CreateProduct';
 function App() {
 
 const {loading, error, products} = useProducts()
+
+const [modal, setModal] = useState(true)
 
   return (
     <div className="max-w-[400px] m-auto">
@@ -23,9 +25,11 @@ const {loading, error, products} = useProducts()
         <Product key={product.id} product={product}/>
       ))}
 
-<Modal title='Create new product'>
-  <CreateProduct />
-</Modal>
+    {modal && 
+    <Modal title='Create new product'>
+      <CreateProduct onCreate={(() => setModal(false))}/>
+    </Modal>
+    }
     </div>
   );
 }
